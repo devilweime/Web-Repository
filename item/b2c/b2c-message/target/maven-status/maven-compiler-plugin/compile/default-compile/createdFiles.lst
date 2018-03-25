@@ -1,0 +1,3 @@
+com\b2c\message\service\MessageService.class
+com\b2c\message\service\impl\MessageServiceImpl.class
+com\b2c\message\controller\MessageController.class

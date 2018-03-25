@@ -1,0 +1,2 @@
+比较干净的Spring+SpringMVC+Mybatis
+可直接修改使用

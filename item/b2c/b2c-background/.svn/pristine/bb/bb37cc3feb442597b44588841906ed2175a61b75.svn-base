@@ -1,0 +1,28 @@
+package com.b2c.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.b2c.mapper.ProductCategoryMapper;
+import com.b2c.model.ProductCategory;
+import com.b2c.model.ProductCategoryExample;
+import com.b2c.model.ProductCategoryExample.Criteria;
+
+@Service
+public class ProductCategoryServiceImpl implements IProductCategoryService {
+
+	@Autowired
+	private ProductCategoryMapper productCategoryMapper;
+	
+	@Override
+	public List<ProductCategory> listCategoryByPid(int pid) {
+		
+		ProductCategoryExample example = new ProductCategoryExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andPidEqualTo(pid);
+		return productCategoryMapper.selectByExample(example);
+	}
+
+}

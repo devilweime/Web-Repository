@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+	xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+	http://www.springframework.org/schema/rabbit/spring-rabbit-1.7.xsd
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+
+	<!-- 1.定义rabbit连接工厂 -->
+	<rabbit:connection-factory id="connectionFactory"
+		host="192.168.48.129" port="5672" username="wei" password="123456"
+		virtual-host="/wei" />
+
+	<!-- 2.定义MQ的管理，包括队列，交换机 -->
+	<rabbit:admin connection-factory="connectionFactory" />
+	
+	<!-- 4.定义交换机，将队列绑定到交换机上 -->
+	<rabbit:fanout-exchange name="loginExchange"
+		auto-declare="true">
+	</rabbit:fanout-exchange>
+
+	<!-- 5.定义Rabbit模板，指定连接工厂及交换机 -->
+	<rabbit:template id="amqpTemplate" connection-factory="connectionFactory"
+		exchange="loginExchange" />
+		
+</beans>
+

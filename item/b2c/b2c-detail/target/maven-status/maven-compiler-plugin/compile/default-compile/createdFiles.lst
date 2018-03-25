@@ -1,0 +1,3 @@
+com\b2c\detail\service\impl\DetailServiceImpl.class
+com\b2c\detail\controller\DetailController.class
+com\b2c\detail\service\IDetailService.class
