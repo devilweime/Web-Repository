@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pms.mailbag.dao.mapper.MailbagExtendMapper">
+
+	<select id="getUnreceivedMailbags" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		SELECT
+		CONCAT(m.mailbag_id,'') mailbagId,
+		m.mailbag_code mailbagCode,
+		m.mailbag_weight mailbagWeight,
+		CONCAT(m.package_count,'') packageCount,
+		c.company_id companyId,
+		c.company_name companyName
+		FROM
+		bs_mailbag m
+		INNER JOIN c_company c ON m.company_id = c.company_id
+		WHERE
+		c.belong_agent_company_id = #{agentCompanyId} and
+		m.mailbag_status = '2'
+
+	</select>
+
+	<select id="scanMailbagDetails" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		SELECT
+		CONCAT(m.mailbag_id,'') mailbagId,
+		m.mailbag_code mailbagCode,
+		CONCAT(m.package_count,'') packageCount,
+		m.mailbag_weight mailbagWeight,
+		c.company_id companyId,
+		c.company_name companyName,
+		m.mailbag_status mailbagStatus
+		FROM
+		bs_mailbag m
+		INNER JOIN c_company c ON m.company_id = c.company_id
+		WHERE
+		m.mailbag_code = #{mailbagCode};
+	</select>
+
+	<select id="mailbagIsExsit" parameterType="java.util.Map"
+		resultType="java.lang.Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			bs_mailbag m
+		INNER JOIN c_company c ON m.company_id = c.company_id
+		INNER JOIN c_user u ON u.company_id = c.belong_agent_company_id
+		WHERE
+			u.user_id = #{userId}
+		AND m.mailbag_code = #{mailbagCode}
+	</select>
+
+	<update id="confirmMailbag" parameterType="java.util.Map">
+		UPDATE bs_mailbag
+		SET mailbag_status = '3',
+		receive_time = NOW(),
+		receive_by = #{userId},
+		update_time = NOW(),
+		update_by = #{userId}
+		WHERE
+		mailbag_code = #{mailbagCode}
+		AND mailbag_status = '2'
+	</update>
+
+
+	<select id="getMailbagDetailsById" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		SELECT
+		CONCAT(CONCAT(m.mailbag_id,''),'') mailbagId,
+		m.mailbag_code mailbagCode,
+		CONCAT(CONCAT(m.package_count,''),'') packageCount,
+		m.mailbag_weight mailbagWeight,
+		c.company_id companyId,
+		c.company_name companyName,
+		m.mailbag_status mailbagStatus,
+		DATE_FORMAT(m.end_time,'%Y-%m-%d %H:%i:%s') bagTime,
+		DATE_FORMAT(m.receive_time,'%Y-%m-%d %H:%i:%s') receiveTime,
+		DATE_FORMAT(m.hand_over_time,'%Y-%m-%d %H:%i:%s') deliverTime
+		FROM
+		bs_mailbag m
+		INNER JOIN c_company c ON m.company_id = c.company_id
+		WHERE
+		m.mailbag_id = #{mailbagId};
+	</select>
+
+
+	<select id="getMailbagDetailsByCode" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		SELECT
+		CONCAT(m.mailbag_id,'') mailbagId,
+		m.mailbag_code mailbagCode,
+		CONCAT(m.package_count,'') packageCount,
+		m.mailbag_weight mailbagWeight,
+		c.company_id companyId,
+		c.company_name companyName,
+		m.mailbag_status mailbagStatus,
+		m.end_time bagTime,
+		m.receive_time receiveTime,
+		m.hand_over_time deliverTime
+
+		FROM
+		bs_mailbag m
+		INNER JOIN c_company c ON m.company_id = c.company_id
+		WHERE
+		m.mailbag_code = #{mailbagCode};
+	</select>
+
+	<select id="getUndeliveredMailbags" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		SELECT
+		CONCAT(m.mailbag_id,'') mailbagId,
+		m.mailbag_code mailbagCode,
+		c.company_id companyId,
+		c.company_name companyName,
+		m.receive_time receiveTime,
+		DATE_FORMAT(m.receive_time,'%Y-%m-%d') datetime
+		FROM
+		bs_mailbag m
+		INNER JOIN c_company c ON m.company_id = c.company_id
+		WHERE
+		c.belong_agent_company_id = #{agentCompanyId} and
+		m.mailbag_status = '3' ORDER BY m.receive_time DESC;
+	</select>
+
+	<select id="getUndeliveredMailbagsDates" parameterType="java.util.Map" resultType="java.lang.String">
+		SELECT
+		DISTINCT(DATE(m.receive_time)) dateTime
+		FROM
+		bs_mailbag m
+		INNER JOIN c_company c ON m.company_id = c.company_id
+		WHERE
+		c.belong_agent_company_id = #{agentCompanyId} and
+		m.mailbag_status = '3'
+		ORDER BY
+		m.receive_time DESC
+	</select>
+
+	<select id="geDeliveredMailbags" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		SELECT
+		CONCAT(m.mailbag_id,'') mailbagId,
+		m.mailbag_code mailbagCode,
+		c.company_id companyId,
+		c.company_name companyName,
+		m.hand_over_time DeliverTime
+		FROM
+		bs_mailbag m
+		INNER JOIN c_company c ON m.company_id = c.company_id
+		WHERE
+		c.belong_agent_company_id = #{agentCompanyId} and
+		m.mailbag_status = '4' ORDER BY m.receive_time DESC
+	</select>
+	
+	<select id="getUndeliveredMailbagsCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+	    SELECT
+		count(*)
+		FROM
+		bs_mailbag m
+		INNER JOIN c_company c ON m.company_id = c.company_id
+		WHERE
+		c.belong_agent_company_id = #{agentCompanyId} and
+		m.mailbag_status = '3'
+	</select>
+</mapper>

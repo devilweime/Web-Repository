@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pms.mailbag.dao.mapper.AuthExtendMapper">
+ 
+    <select id="getAuthorityByUserId" parameterType="java.util.Map" resultType="com.pms.mailbag.dao.model.Authority">
+        SELECT
+			ai.auth_id authId,
+			ai.auth_name authName,
+			ai.parent_auth_id parentAuthId,
+			ai.auth_sort authSort
+		FROM
+			agent_user_role ur
+		INNER JOIN agent_role_info ri ON ur.role_id = ri.role_id
+		INNER JOIN agent_role_auth ra ON ri.role_id = ra.role_id
+		INNER JOIN agent_auth_info ai on ra.auth_id  =  ai.auth_id
+		where ur.user_id = #{userId};
+    </select>
+    
+</mapper>

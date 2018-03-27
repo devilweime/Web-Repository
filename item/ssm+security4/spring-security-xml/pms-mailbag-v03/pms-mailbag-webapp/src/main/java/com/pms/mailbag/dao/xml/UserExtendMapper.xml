@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pms.mailbag.dao.mapper.UserExtendMapper">
+
+	<select id="getUserInfoByUsername" parameterType="java.util.Map" resultType="com.pms.mailbag.dao.model.User">
+		SELECT
+			user_id userId,
+			user_name username,
+			u. PASSWORD PASSWORD,
+			u.company_id agentCompanyId,
+			u.supper_user_flag supperUserFlag,
+			c.company_name agentCompanyName,
+			c.company_code agentCompanyCode
+		FROM
+			c_user u
+		INNER JOIN c_company c ON u.company_id = c.company_id
+		WHERE
+			u.user_name = #{username} and status='1'
+	</select>
+	
+	<select id="getUserInfoByUserId" parameterType="java.util.Map" resultType="com.pms.mailbag.dao.model.User">
+	    SELECT
+			user_id userId,
+			user_name username,
+			u. PASSWORD PASSWORD,
+			u.company_id agentCompanyId,
+			c.company_name agentCompanyName,
+			c.company_code agentCompanyCode
+		FROM
+			c_user u
+		INNER JOIN c_company c ON u.company_id = c.company_id
+		WHERE
+			u.user_id = #{userId} and status='1'
+	</select>
+    
+	<update id="updatePasswordByUsername" parameterType="java.util.Map">
+	    UPDATE c_user u
+		SET u.`password` = #{newPassword},
+		 u.update_time = NOW(),
+		 u.update_by = #{userId}
+		WHERE
+			u.user_name = #{username}
+	</update>
+	
+	<update id="updatePasswordByUserId" parameterType="java.util.Map">
+	    UPDATE c_user u
+		SET u.`password` = #{newPassword},
+		 u.update_time = NOW(),
+		 u.update_by = #{userId}
+		WHERE
+			u.user_id = #{userId}
+	</update>
+    
+	<insert id="insertCUserLoginRecordSelective" parameterType="com.pms.mailbag.dao.model.CUserLoginRecord" >
+    insert into c_user_login_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userLoginRecordId != null" >
+        user_login_record_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="loginAddress != null" >
+        login_address,
+      </if>
+      <if test="loginStatus != null" >
+        login_status,
+      </if>
+      <if test="loginTime != null" >
+        login_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userLoginRecordId != null" >
+        #{userLoginRecordId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="loginAddress != null" >
+        #{loginAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="loginStatus != null" >
+        #{loginStatus,jdbcType=CHAR},
+      </if>
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+	
+	<select id="getUserInfoByUserIdAndPasswod" parameterType="java.util.Map" resultType="com.pms.mailbag.dao.model.User">
+	    SELECT
+			user_id userId,
+			user_name username,
+			u. PASSWORD PASSWORD,
+			u.company_id agentCompanyId,
+			c.company_name agentCompanyName,
+			c.company_code agentCompanyCode
+		FROM
+			c_user u
+		INNER JOIN c_company c ON u.company_id = c.company_id
+		WHERE
+			u.user_id = #{userId} and status='1' and password = #{password}
+	</select>
+	
+</mapper>
