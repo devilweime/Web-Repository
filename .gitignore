@@ -2,6 +2,7 @@
 
 #Intellij project files
 /**/.idea
+/**/.iml
 
 #eclipse
 /**/*.settings
