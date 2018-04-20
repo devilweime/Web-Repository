@@ -1,0 +1,24 @@
+#set($greet = 'hello')
+$greet $name
+#foreach($i in $list)
+    $i
+#end
+
+-----------------------------------------
+
+#set($array = [])
+$array.add('1')
+$array.add('2')
+$array.add($hhh)
+
+#set($array2=[])
+
+#foreach($a in $array)
+    $array2.add($!a)
+#end
+
+-----------------------------------------
+
+#foreach($a in $array2)
+    $!a
+#end
