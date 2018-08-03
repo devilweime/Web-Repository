@@ -1,0 +1,39 @@
+package com.wgw.main;
+
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.webapp.WebAppContext;
+
+public class JettyServer {
+
+	public static void main(String[] args) throws Exception {
+
+		Server server = new Server(8081);
+		/*Connector connector = new NetworkTrafficSelectChannelConnector(server);
+		
+		server.setConnectors(new Connector[] { connector });*/
+
+		WebAppContext webAppContext = new WebAppContext("WebContent", "/myProject");
+
+		webAppContext.setContextPath("/");
+		webAppContext.setDescriptor("WebContent/WEB-INF/web.xml");
+		webAppContext.setResourceBase("WebContent");
+		webAppContext.setDisplayName("myProject");
+		webAppContext.setClassLoader(Thread.currentThread().getContextClassLoader());
+		webAppContext.setConfigurationDiscovered(true);
+		webAppContext.setParentLoaderPriority(true);
+		server.setHandler(webAppContext);
+		System.out.println(webAppContext.getContextPath());
+		System.out.println(webAppContext.getDescriptor());
+		System.out.println(webAppContext.getResourceBase());
+		System.out.println(webAppContext.getBaseResource());
+		
+		
+		try {
+			server.start();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("server is  start");
+	}
+
+}

@@ -1,0 +1,12 @@
+package com.wgw.main;
+
+public class JettyServer {
+	
+	
+	
+	public static void main(String[] args) {
+		
+	}
+	
+
+}

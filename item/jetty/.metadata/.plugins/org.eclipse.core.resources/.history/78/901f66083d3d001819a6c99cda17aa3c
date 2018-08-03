@@ -1,0 +1,5 @@
+package com.wgw.servlet;
+
+public class JspServlet {
+
+}

@@ -1,0 +1,5 @@
+然后直接运行：mvn jetty:run,就可以直接启动了。jetty会默认加载以下的配置：
+
+resources in ${project.basedir}/src/main/webapp  
+classes in ${project.build.outputDirectory}  
+web.xml in ${project.basedir}/src/main/webapp/WEB-INF/

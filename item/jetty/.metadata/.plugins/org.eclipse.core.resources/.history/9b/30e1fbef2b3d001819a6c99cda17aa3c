@@ -1,0 +1,16 @@
+package com.wgw.main;
+
+import org.eclipse.jetty.server.Server;
+
+public class JettyServer {
+	
+	
+	public static void main(String[] args) {
+		
+		Server server = new Server(8080);
+		
+		
+	}
+	
+
+}

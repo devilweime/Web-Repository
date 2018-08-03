@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;my_jetty_sample&apos; to &apos;java_jetty_sample&apos;" description="Rename resource &apos;my_jetty_sample&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/my_jetty_sample" name="java_jetty_sample" stamp="1523418752310" updateReferences="true"/>
+</session>

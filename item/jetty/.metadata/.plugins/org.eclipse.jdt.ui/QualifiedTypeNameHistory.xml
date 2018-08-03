@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="org.eclipse.jetty.server.Server"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.servlet.ServletContextHandler"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.servlet.ServletHolder"/>
+<fullyQualifiedTypeName name="com.wgw.servlet.IndexServlet"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.server.Connector"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.webapp.WebAppContext"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.server.ServerConnector"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.server.nio.NetworkTrafficSelectChannelConnector"/>
+<fullyQualifiedTypeName name="javax.servlet.http.HttpServlet"/>
+<fullyQualifiedTypeName name="org.eclipse.jetty.servlet.ServletHandler"/>
+</qualifiedTypeNameHistroy>
